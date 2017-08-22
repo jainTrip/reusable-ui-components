@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/custom.css">
+    <link rel="stylesheet" href="/stylesheets/buttons.css">
+    <link rel="stylesheet" href="/stylesheets/hover.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <title>The Awesome HTML5 / CSS Catalogue</title>
+    <script language="javascript">
+        //INSERT INLINE SCRIPTS HERE
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+</head>
+
+<body>
+       <div class="header">
+               <div class="container-fluid">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#"><span class="logoText">UX</span><span class="titleText">Think? Breathe! Design</span></a>
+                </div>
+
+                <span class="nav text-primary navbar-right navbar-text m-2" />One stop for all your designing needs
+            </div>
+        </nav>
+    </div>
+       </div>
+    {{{body}}}
+
+    <!--------- Text Box Sample 2--------->
+
+    <!-------Modal---------->
+    <!-- Trigger the modal with a button -->
+<!--<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>-->
+
+<!-- Modal -->
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+      </div>
+      <div class="modal-body">
+        <div id="Content">
+   hello cOPIEED tEXT
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button"  onclick="CopyToClipboard('Content')" id="copyText" class="btn btn-primary">Copy</button>
+      </div>
+    </div>
+  </div>
+</div>
+        <!-------Modal Ends---------->
+    <footer class="footer myfooter bg-error">
+        <div class="container">
+            <p class="text-muted" style="margin-top: 3vh;">This is a demo version for the soon to be deployed HTML/CSS helper.</p>
+            <p class="text-muted"><a href="mailto:Noida6EliLilly UI grp">Write to us </a>in case of help/suggestion/feedback.</p>
+        </div>
+    </footer>
+    <script type="text/javascript">
+
+        $('.effects a').on('click', function (e) {
+            e.preventDefault();
+            var val = window.getComputedStyle(document.getElementsByClassName($(this)[0].className)[0], null)
+            $('#exampleModalLong #Content').text(JSON.stringify(val));
+            $('#exampleModalLong').modal('show');
+        });
+
+
+        function CopyToClipboard(Content) {
+            if (document.selection) { 
+                var range = document.body.createTextRange();
+                range.moveToElementText(document.getElementById(Content));
+                range.select().createTextRange();
+                document.execCommand("Copy"); 
+
+            } else if (window.getSelection) {
+                var range = document.createRange();
+                range.selectNode(document.getElementById(Content));
+                window.getSelection().addRange(range);
+                document.execCommand("Copy");
+                alert("text copied") 
+            }}
+    </script>
+</body>
+
+</html>
