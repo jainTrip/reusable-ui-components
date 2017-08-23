@@ -5,29 +5,15 @@ var express = require('express')
   , stylus = require('stylus')
   , nib = require('nib')
 var app = express()
-app.set('port', (process.env.PORT || 7000));
+// app.set('port', (process.env.PORT || 7000));
+if (app.get('env') === 'development') { 
 
-var basicAuth = require('basic-auth');
+   require('dotenv').config(); 
+} 
 
+var AUTH_REQUIRED = process.env.AUTH_REQUIRED;
+console.log(AUTH_REQUIRED);
 var exphbs = require('express-handlebars');
-var auth = function (req, res, next) {
-    function unauthorized(res) {
-        res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
-        return res.send(401);
-    };
-
-    var user = basicAuth(req);
-
-    if (!user || !user.name || !user.pass) {
-        return unauthorized(res);
-    };
-
-    if (user.name === 'foo' && user.pass === 'bar') {
-        return next();
-    } else {
-        return unauthorized(res);
-    };
-};
 
 function compile(str, path) {
   return stylus(str)
@@ -44,15 +30,42 @@ app.use(stylus.middleware(
   }
 ))
 app.use(express.static(__dirname + '/public'))
+if (AUTH_REQUIRED === 'true') {
 
+var basicAuth = require('basic-auth');
+
+
+var auth = function (req, res, next) {
+    function unauthorized(res) {
+        res.set('WWW-Authenticate', 'Basic realm=Authorization Required');
+        return res.send(401);
+    };
+
+    var user = basicAuth(req);
+
+    if (!user || !user.name || !user.pass) {
+        return unauthorized(res);
+    };
+
+    if (user.name === process.env.USER_NAME && user.pass === process.env.PASS_WORD) {
+        return next();
+    } else {
+        return unauthorized(res);
+    };
+};
+app.get('/', auth, function (req, res) {
+    res.render('index',
+    { title: 'Home' }
+    )
+})
+}else{
 app.get('/',  function (req, res) {
     res.render('index',
     { title: 'Home' }
     )
 })
-app.listen(app.get('port'), function() {
-  console.log('Node app is running on port', app.get('port'));
-});
+}
+
 module.exports = app;
 
 
